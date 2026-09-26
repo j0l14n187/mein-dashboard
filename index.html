@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#090909"><meta name="description" content="Dein persönliches, kostenloses Dashboard.">
+  <title>Dashboard</title><link rel="stylesheet" href="style.css"><script src="app.js" defer></script>
+</head>
+<body>
+  <section class="login-screen" id="login-screen" aria-labelledby="login-title">
+    <form class="login-card" id="login-form">
+      <h1 id="login-title">Dashboard</h1>
+      <label class="field-label" for="login-username">Benutzername</label><input id="login-username" name="username" autocomplete="username" required>
+      <label class="field-label" for="login-password">Passwort</label><input id="login-password" name="password" type="password" autocomplete="current-password" required>
+      <p class="login-error" id="login-error" role="alert" hidden>Benutzername oder Passwort stimmt nicht.</p>
+      <button class="button login-submit" type="submit">Anmelden</button>
+    </form>
+  </section>
+  <aside class="sidebar">
+    <a class="brand" href="#home"><span class="brand-mark">JK</span><span>DASHBOARD</span></a>
+    <p class="nav-label">MENÜ</p>
+    <nav class="main-nav" aria-label="Hauptnavigation">
+      <button class="nav-item active" data-view="home"><span class="nav-icon">⌂</span>Home</button>
+      <button class="nav-item" data-view="calendar"><span class="nav-icon">▦</span>Kalender</button>
+      <button class="nav-item" data-view="reminders"><span class="nav-icon">✓</span>Erinnerungen</button>
+      <button class="nav-item" data-view="timetable"><span class="nav-icon">▤</span>Stundenplan</button>
+      <button class="nav-item" data-view="email"><span class="nav-icon">✉</span>Email</button>
+      <button class="nav-item" data-view="teams"><span class="nav-icon">◉</span>Microsoft Teams</button>
+      <button class="nav-item" data-view="iserv"><span class="nav-icon">↗</span>IServ</button>
+    </nav>
+    <div class="sidebar-bottom"><span class="status-dot"></span><span>Dein persönlicher Bereich</span></div>
+  </aside>
+  <main class="main-area">
+    <header class="topbar"><div class="mobile-brand"><span class="brand-mark">JK</span> DASHBOARD</div><div class="top-actions"><span class="status-dot"></span><span id="today-label">Guten Tag</span><button class="logout-button" id="logout-button">Abmelden</button></div></header>
+
+    <section class="view active" id="view-home" data-title="Home">
+      <div class="hero"><div><p class="eyebrow" id="date-label">HEUTE</p><h1 id="clock">--:--</h1><p class="hero-sub">Ein klarer Blick auf deinen Tag.</p></div></div>
+      <div class="grid home-grid">
+        <article class="panel"><div class="panel-heading"><div><p class="eyebrow">DEIN TAG</p><h2>Nächste Termine</h2></div><button class="text-button" data-go="calendar">Alle ansehen →</button></div><p id="home-calendar-status" class="muted status-message">Öffne Kalender, um deinen Feed hinzuzufügen.</p><div id="home-events" class="events"></div></article>
+        <article class="panel"><div class="panel-heading"><div><p class="eyebrow">FOKUS</p><h2>Offene Erinnerungen <span class="count" id="home-todo-count">0</span></h2></div><button class="text-button" data-go="reminders">Öffnen →</button></div><ul id="home-todo-list" class="todo-list"></ul><p class="hint">Deine Aufgaben bleiben auf diesem Gerät gespeichert.</p></article>
+        <article class="panel add-widget"><div class="widget-symbol">＋</div><div><p class="eyebrow">DEIN DASHBOARD</p><h2>Dein Tag, auf einen Blick</h2><p class="muted">Kalender, Erinnerungen und Stundenplan findest du links im Menü.</p></div></article>
+      </div>
+    </section>
+
+    <section class="view" id="view-calendar" data-title="Kalender">
+      <div class="page-heading"><div><p class="eyebrow">PLANUNG</p><h1>Kalender</h1><p class="hero-sub">Deine nächsten Termine aus Apple Kalender.</p></div><button class="icon-button" id="settings-toggle" aria-expanded="false" aria-controls="calendar-settings" title="Kalendereinstellungen">⚙</button></div>
+      <section class="settings panel" id="calendar-settings" hidden><div><p class="eyebrow">APPLE-KALENDER</p><h2>Kalender verbinden</h2><p class="muted">Füge deinen iCloud-Public-Calendar-Link ein. Jeder mit diesem Link kann die Termine sehen. Teile keinen Kalender mit sensiblen Terminen.</p></div><label class="field-label" for="feed-url">iCloud-Kalender-Link</label><div class="feed-row"><input id="feed-url" type="url" placeholder="webcal://pXX-caldav.icloud.com/published/…" autocomplete="off"><button class="button" id="save-feed">Speichern</button></div><p class="hint">Der Link bleibt nur in diesem Browser gespeichert. Bei CORS-Fehlern lade eine .ics-Datei hoch.</p><label class="file-button">.ics-Datei importieren<input id="ics-file" type="file" accept=".ics,text/calendar"></label></section>
+      <article class="panel calendar-panel"><div class="panel-heading"><div><p class="eyebrow">TERMINE</p><h2>Nächste Termine</h2></div><button class="text-button" id="refresh-calendar">Aktualisieren ↻</button></div><p id="calendar-status" class="muted status-message">Noch kein Kalender verbunden.</p><div id="events" class="events"></div></article>
+    </section>
+
+    <section class="view" id="view-reminders" data-title="Erinnerungen">
+      <div class="page-heading"><div><p class="eyebrow">FOKUS</p><h1>Erinnerungen</h1><p class="hero-sub">Halte fest, was du erledigen möchtest.</p></div></div>
+      <div class="grid single-grid"><article class="panel apple-reminders-card"><div><p class="eyebrow">APPLE ERINNERUNGEN</p><h2>Apple-Erinnerungen öffnen</h2><p class="muted">Deine iCloud-Erinnerungen lassen sich aus dieser statischen Website nicht direkt auslesen. Öffne sie sicher bei Apple; Änderungen synchronisieren über deinen Apple-Account.</p><a class="button link-button" href="https://www.icloud.com/reminders/" target="_blank" rel="noopener noreferrer">Apple Erinnerungen öffnen ↗</a></div></article><article class="panel todo-panel"><div class="panel-heading"><div><p class="eyebrow">DASHBOARD-LISTE</p><h2>Lokale To-dos <span class="count" id="todo-count">0</span></h2></div></div><form id="todo-form" class="entry-row"><input id="todo-input" maxlength="120" placeholder="Was steht an?" aria-label="Neue Aufgabe"><button class="add-button" aria-label="Aufgabe hinzufügen">+</button></form><ul id="todo-list" class="todo-list"></ul><p class="hint">Diese Liste ist getrennt von Apple Erinnerungen und bleibt lokal in diesem Browser.</p></article>
+      <article class="panel notes-panel"><div class="panel-heading"><div><p class="eyebrow">GEDANKEN</p><h2>Notizen</h2></div><span class="save-state" id="note-state">Automatisch gespeichert</span></div><textarea id="notes" maxlength="5000" placeholder="Platz für Ideen, Erinnerungen und alles, was du festhalten möchtest …" aria-label="Notizen"></textarea></article></div>
+    </section>
+
+    <section class="view" id="view-timetable" data-title="Stundenplan">
+      <div class="page-heading"><div><p class="eyebrow">SCHULE</p><h1>Stundenplan</h1><p class="hero-sub">Importiere deinen WebUntis-Stundenplan als iCalendar-Datei.</p></div></div>
+      <article class="panel timetable-panel"><p class="eyebrow">WEBUNTIS</p><h2>Stundenplan verbinden</h2><p class="muted">Diese statische Website kann WebUntis nicht sicher direkt mit Benutzername und Passwort verbinden. Exportiere oder teile deinen Stundenplan aus WebUntis als iCalendar-Datei (.ics), dann kannst du ihn hier lokal öffnen.</p><label class="file-button">WebUntis-.ics-Datei auswählen<input id="untis-file" type="file" accept=".ics,text/calendar"></label><p class="hint">Die Datei wird nur in deinem Browser verarbeitet und nicht hochgeladen. Aktualisiere den Import, wenn sich dein Stundenplan ändert. Falls deine Schule keinen iCalendar-Export anbietet, kann eine echte automatische Anbindung einen eigenen sicheren Server und die WebUntis-Zugangsdaten deiner Schule erfordern.</p></article>
+      <article class="panel timetable-panel"><div class="panel-heading"><div><p class="eyebrow">UNTIS-IMPORT</p><h2>Unterrichtstermine</h2></div></div><p id="untis-status" class="muted status-message">Noch kein Stundenplan importiert.</p><div id="untis-events" class="events"></div></article>
+    </section>
+    <section class="view" id="view-email" data-title="Email">
+      <div class="page-heading"><div><p class="eyebrow">POSTFACH</p><h1>Email</h1><p class="hero-sub">Öffne dein GMX-Postfach und prüfe ungelesene Nachrichten.</p></div></div>
+      <article class="panel service-card"><div class="service-icon">✉</div><div><p class="eyebrow">GMX</p><h2>GMX Mail öffnen</h2><p class="muted">Melde dich bei GMX an, um dein Postfach und ungelesene E-Mails zu sehen. Aus Sicherheitsgründen werden deine Nachrichten nicht in dieser Website angezeigt.</p><a class="button link-button" href="https://www.gmx.net/mail/" target="_blank" rel="noopener noreferrer">GMX Mail öffnen ↗</a></div></article>
+      <p class="hint service-note">Ein direkter Zugriff auf ungelesene Nachrichten würde eine geschützte GMX-Schnittstelle und einen eigenen Server erfordern. Gib dein GMX-Passwort niemals in dieses Dashboard ein.</p>
+    </section>
+    <section class="view" id="view-teams" data-title="Microsoft Teams">
+      <div class="page-heading"><div><p class="eyebrow">ZUSAMMENARBEIT</p><h1>Microsoft Teams</h1><p class="hero-sub">Öffne Teams in einem neuen Tab.</p></div></div>
+      <article class="panel service-card"><div class="service-icon">◉</div><div><p class="eyebrow">MICROSOFT</p><h2>Teams öffnen</h2><p class="muted">Melde dich direkt bei Microsoft Teams an. Der Login und deine Chats bleiben bei Microsoft.</p><a class="button link-button" href="https://teams.microsoft.com/" target="_blank" rel="noopener noreferrer">Microsoft Teams öffnen ↗</a></div></article>
+    </section>
+    <section class="view" id="view-iserv" data-title="IServ">
+      <div class="page-heading"><div><p class="eyebrow">SCHULE</p><h1>IServ</h1><p class="hero-sub">Rufe deinen Schulserver direkt auf.</p></div></div>
+      <article class="panel service-card"><div class="service-icon">↗</div><div class="service-content"><p class="eyebrow">DEIN SCHULSERVER</p><h2>IServ-URL eintragen</h2><p class="muted">IServ-Adressen sind je nach Schule unterschiedlich. Trage die Adresse deiner Schule ein, zum Beispiel <strong>https://schule.iserv.eu</strong>. Der Link wird nur in diesem Browser gespeichert.</p><form id="iserv-form" class="feed-row"><input id="iserv-url" type="url" placeholder="https://deine-schule.iserv.eu" autocomplete="url" aria-label="IServ-Adresse"><button class="button">Speichern</button></form><a id="iserv-open" class="button link-button" href="https://iserv.eu/" target="_blank" rel="noopener noreferrer">IServ öffnen ↗</a></div></article>
+      <p class="hint service-note">Das Dashboard übernimmt keinen IServ-Login. Melde dich auf der offiziellen Seite deiner Schule an.</p>
+    </section>
+    <footer><span>Privat auf deinem Gerät gespeichert</span><span>Schlicht. Übersichtlich. Deins.</span></footer>
+  </main>
+</body>
+</html>
