@@ -1,0 +1,1 @@
+{ "name": "token-leiste", "version": "0.1.0", "description": "Kleine Leiste über dem Eingabefeld: Tokens gesamt, Kurzzeit-Limit und Wochenlimit als Balken", "types": "./types/index.d.ts" }
